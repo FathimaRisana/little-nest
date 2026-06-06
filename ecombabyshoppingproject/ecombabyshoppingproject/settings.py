@@ -76,10 +76,22 @@ WSGI_APPLICATION = 'ecombabyshoppingproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+import shutil
+import os
+
+DB_PATH = BASE_DIR / 'db.sqlite3'
+
+# If running on Vercel or read-only directory, copy the database to /tmp
+if os.environ.get('VERCEL') or not os.access(str(BASE_DIR), os.W_OK):
+    tmp_db_path = '/tmp/db.sqlite3'
+    if not os.path.exists(tmp_db_path) and os.path.exists(str(DB_PATH)):
+        shutil.copy2(str(DB_PATH), tmp_db_path)
+    DB_PATH = Path(tmp_db_path)
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(BASE_DIR / 'db.sqlite3'),
+        'NAME': str(DB_PATH),
     }
 }
 
