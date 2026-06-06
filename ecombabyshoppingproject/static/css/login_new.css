@@ -1,0 +1,196 @@
+/* ================= RESET ================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI", system-ui, sans-serif;
+}
+
+/* ================= BODY BACKGROUND ================= */
+/* ================= BODY BACKGROUND ================= */
+body{
+    min-height:100vh;
+    background:url("https://images.unsplash.com/photo-1441986300917-64674bd600d8") center/cover no-repeat;
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    /* ✅ FIXED BACKGROUND */
+    background-attachment:fixed;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+/* ================= MAIN CONTAINER ================= */
+.fullview{
+    width:95%;
+    max-width:1100px;
+    min-height:600px;
+
+    display:flex;
+    border-radius:15px;
+    overflow:hidden;
+
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(9px);
+    color:white;
+}
+
+/* ================= LEFT SIDE ================= */
+.leftside{
+    flex:1;
+    padding:60px;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.leftside h1{
+    font-size:36px;
+    letter-spacing:10px;
+    margin-top:-25px;
+
+
+}
+
+.leftside h2{
+    margin-top:5px;
+    font-size:36px;
+    letter-spacing:8px
+
+
+
+}
+
+.leftside p{
+    margin-top:15px;
+    line-height:1.6;
+    opacity:.9;
+    letter-spacing:2px
+}
+
+/* ================= LOGIN BOX ================= */
+.loginpart{
+    flex:1;
+    padding:60px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(12px);
+}
+
+/* ================= INPUT ================= */
+.loginpart label{
+    margin-top:10px;
+}
+
+.loginpart input{
+    width:100%;
+    padding:12px;
+    margin-top:6px;
+    border:none;
+    border-radius:6px;
+}
+
+/* ================= FORGET ================= */
+.forget{
+    text-align:right;
+    font-size:14px;
+    margin-top:5px;
+    text-decoration:none;
+    color:white;
+}
+
+/* ================= BUTTON ================= */
+.btn{
+    width:100%;
+    padding:12px;
+    margin-top:15px;
+    border:none;
+    border-radius:6px;
+    background:#1e90ff;
+    color:white;
+    cursor:pointer;
+}
+
+/* ================= OR TEXT ================= */
+.div1{
+    text-align:center;
+    margin:15px 0;
+}
+
+/* ================= GOOGLE BUTTON ================= */
+.google_btn{
+    width:100%;
+    padding:12px;
+    border-radius:6px;
+    border:none;
+    background:white;
+    color:black;
+    cursor:pointer;
+}
+
+.googl_image{
+    width:22px;
+    display:block;
+    margin:10px auto;
+}
+
+/* ================= LAST TEXT ================= */
+.last_a{
+    text-align:center;
+    margin-top:15px;
+}
+
+.last_a a{
+    color:white;
+    text-decoration:underline;
+}
+
+/* ========================= */
+/* ✅ TABLET RESPONSIVE */
+/* ========================= */
+@media(max-width:992px){
+
+.fullview{
+    flex-direction:column;
+}
+
+.leftside,
+.loginpart{
+    width:100%;
+    padding:40px;
+    text-align:center;
+}
+
+}
+
+/* ========================= */
+/* ✅ MOBILE RESPONSIVE */
+/* ========================= */
+@media(max-width:576px){
+
+.leftside h1{
+    font-size:24px;
+}
+
+.leftside h2{
+    font-size:26px;
+}
+
+.loginpart{
+    padding:25px;
+}
+
+.btn,
+.google_btn{
+    padding:10px;
+}
+
+}

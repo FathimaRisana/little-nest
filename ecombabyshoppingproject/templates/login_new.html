@@ -1,0 +1,276 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Little Nest</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --pink-light: #FFF6F8;
+            --pink-brand: #FF6B9A;
+            --pink-dark: #E75480;
+            --purple-brand: #9F86C0;
+            --text-color: #4A4E69;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: 'Quicksand', 'Nunito', sans-serif;
+            background: linear-gradient(rgba(255, 246, 248, 0.45), rgba(255, 246, 248, 0.3)),
+                        url("{% static 'images/regbgnewimg.png' %}") center/cover no-repeat fixed;
+            color: var(--text-color);
+        }
+
+        .fullview {
+            width: 100%;
+            max-width: 1000px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(231, 84, 128, 0.15);
+            display: flex;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* LEFT SIDE */
+        .leftside {
+            flex: 1;
+            padding: 50px;
+            background: linear-gradient(135deg, rgba(231, 84, 128, 0.95), rgba(255, 107, 154, 0.9));
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .leftside h1 {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .leftside h2 {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .leftside p {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* LOGIN FORM */
+        .loginpart {
+            flex: 1;
+            padding: 50px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .loginpart label {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .loginpart input {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 18px;
+            border: 2px solid rgba(255, 107, 154, 0.15);
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+            background-color: var(--pink-light);
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .loginpart input:focus {
+            border-color: var(--pink-brand);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(255, 107, 154, 0.1);
+        }
+
+        .forget {
+            display: block;
+            text-align: right;
+            font-size: 13px;
+            color: var(--pink-brand);
+            text-decoration: none;
+            margin-top: -10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .forget:hover {
+            color: var(--pink-dark);
+            text-decoration: underline;
+        }
+
+        .btn-signin {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--pink-brand), var(--pink-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 107, 154, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-signin:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(255, 107, 154, 0.35);
+        }
+
+        .div1 {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 14px;
+            color: #a0aec0;
+            position: relative;
+        }
+
+        .div1::before, .div1::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: #e2e8f0;
+        }
+
+        .div1::before { left: 0; }
+        .div1::after { right: 0; }
+
+        .google_btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            color: var(--text-color);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+
+        .google_btn:hover {
+            background: #f7fafc;
+            border-color: #cbd5e0;
+        }
+
+        .googl_image {
+            width: 20px;
+            height: 20px;
+        }
+
+        .last_a {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .last_a a {
+            color: var(--pink-brand);
+            font-weight: 700;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .last_a a:hover {
+            color: var(--pink-dark);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .fullview {
+                flex-direction: column;
+                border-radius: 20px;
+            }
+            .leftside {
+                padding: 40px 30px;
+                text-align: center;
+            }
+            .loginpart {
+                padding: 40px 30px;
+            }
+            .leftside h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="fullview">
+    <!-- LEFT SIDE -->
+    <div class="leftside">
+        <h1>SHOP SMART</h1>
+        <h2>Discover Your Style</h2>
+        <p>
+            Login now to explore curated collections, seasonal offers, and handpicked baby products created to enhance your parenting journey.
+        </p>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div class="loginpart">
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Username" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+
+            <a href="#" class="forget">Forgot Password?</a>
+
+            <button type="submit" class="btn-signin">SIGN IN</button>
+        </form>
+
+        <div class="div1">OR</div>
+
+        <button class="google_btn">
+            <img src="{% static 'images/google_image-removebg-preview(1).png' %}" class="googl_image" alt="Google">
+            Sign in with Google
+        </button>
+
+        <p class="last_a">
+            Are you new? 
+            <a href="{% url 'register' %}">Create an Account</a>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,478 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category.name }} - Little Nest</title>
+
+    <!-- ✅ Bootstrap Added -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --pink-light: #FFF6F8;
+            --pink-brand: #FF6B9A;
+            --pink-dark: #E75480;
+            --text-color: #4A4E69;
+            --card-shadow: 0 8px 30px rgba(231, 84, 128, 0.08);
+            --card-shadow-hover: 0 15px 35px rgba(231, 84, 128, 0.15);
+        }
+
+        body {
+            background: var(--pink-light);
+            font-family: 'Quicksand', 'Nunito', sans-serif;
+            color: var(--text-color);
+            overflow-x: hidden;
+            padding-bottom: 50px;
+        }
+
+        /* HEADER / NAVBAR STYLE FOR CONSISTENCY */
+        .navbar-brand-simple {
+            display: block;
+            text-align: center;
+            padding: 20px 0 10px 0;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--pink-brand);
+            text-decoration: none;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-left: 40px;
+            color: var(--pink-brand);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+
+        .back-home:hover {
+            color: var(--pink-dark);
+            transform: translateX(-3px);
+        }
+
+        .products-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            padding: 20px 40px;
+        }
+
+        /* CARD */
+        .product-card {
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 107, 154, 0.05);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: rgba(255, 107, 154, 0.2);
+        }
+
+        /* IMAGE BOX */
+        .img-box {
+            height: 220px;
+            background: var(--pink-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        .img-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .img-box img {
+            transform: scale(1.08);
+        }
+
+        /* CONTENT */
+        .product-content {
+            padding: 20px;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-content h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-color);
+            height: 44px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            line-height: 1.5;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--pink-brand);
+            margin-bottom: 15px;
+        }
+
+        /* BUTTON GROUP */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .cart-btn, .buy-btn {
+            flex: 1;
+            padding: 10px 15px;
+            border-radius: 25px;
+            border: none;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        /* ADD TO CART */
+        .cart-btn {
+            background: #ffe4ec;
+            color: var(--pink-brand);
+        }
+
+        .cart-btn:hover {
+            background: var(--pink-brand);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* BUY NOW */
+        .buy-btn {
+            background: #2B2D42;
+            color: white;
+        }
+
+        .buy-btn:hover {
+            background: #000000;
+            transform: translateY(-1px);
+        }
+
+        /* BADGE */
+        .product-card::after {
+            content: "NEW";
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--pink-brand);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            box-shadow: 0 2px 6px rgba(255,107,154,0.3);
+        }
+
+        /* TITLE BOX */
+        .title-box {
+            text-align: center;
+            margin: 40px 20px 30px 20px;
+        }
+
+        .title-box h2 {
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--pink-dark);
+            letter-spacing: -0.5px;
+            margin-bottom: 5px;
+        }
+
+        .title-box h2 span {
+            display: block;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--purple-brand);
+            margin-top: 5px;
+        }
+
+        .title-box p {
+            font-size: 15px;
+            color: #718096;
+            font-style: italic;
+        }
+
+        .title-box::after {
+            content: "";
+            display: block;
+            width: 70px;
+            height: 3px;
+            background: var(--pink-brand);
+            margin: 15px auto 0;
+            border-radius: 5px;
+        }
+
+        /* PAYMENT MODAL */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+        }
+
+        .payment-box {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 30px;
+            border: 1px solid rgba(255, 107, 154, 0.15);
+            width: 90%;
+            max-width: 400px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            position: relative;
+            text-align: center;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: var(--pink-brand);
+        }
+
+        .payment-box h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--pink-dark);
+            margin-bottom: 15px;
+        }
+
+        #productInfo {
+            font-size: 16px;
+            margin-bottom: 25px;
+            color: var(--text-color);
+            background: var(--pink-light);
+            padding: 12px;
+            border-radius: 12px;
+            line-height: 1.6;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .payment-methods button {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 107, 154, 0.2);
+            background: #ffffff;
+            color: var(--text-color);
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .payment-methods button:hover {
+            background: var(--pink-brand);
+            color: white;
+            border-color: var(--pink-brand);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 154, 0.2);
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:992px){
+            .products-container {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                padding: 20px;
+            }
+            .title-box h2 {
+                font-size: 32px;
+            }
+        }
+
+        @media(max-width:768px){
+            .products-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                padding: 15px;
+            }
+            .title-box h2 {
+                font-size: 26px;
+            }
+        }
+
+        @media(max-width:480px){
+            .products-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<a href="{% url 'home' %}" class="navbar-brand-simple">Little Nest</a>
+<a href="{% url 'home' %}" class="back-home"><i class="bi bi-arrow-left me-1"></i>Back to Home</a>
+
+<div class="title-box">
+    <h2>{{ category.name }} <span>for Your Little One</span></h2>
+    <p>Designed with Love 💖</p>
+</div>
+
+<div class="products-container">
+
+{% for product in products %}
+<div class="product-card">
+
+    <div class="img-box">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% else %}
+            <img src="{% static 'default.png' %}" alt="{{ product.name }}">
+        {% endif %}
+    </div>
+
+    <div class="product-content">
+         <h3 title="{{ product.name }}">{{ product.name }}</h3>
+        <div class="price">₹{{ product.price }}</div>
+        <div class="btn-group">
+            <button class="cart-btn" onclick="checkLogin('{% url 'add_to_cart' product.id %}')">
+                Add to Cart
+            </button>
+            <button class="buy-btn" onclick="checkBuy('{{ product.name|escapejs }}', '{{ product.price }}')">
+                Buy Now
+            </button>
+        </div>
+    </div>
+
+</div>
+{% empty %}
+<div class="text-center w-100 py-5">
+    <h3>No products found in this category 😔</h3>
+</div>
+{% endfor %}
+
+</div>
+
+<div id="paymentModal" class="payment-modal">
+    <div class="payment-box">
+        <span onclick="closeModal()" class="close-btn">&times;</span>
+        <h2>💳 LittleNest Payment</h2>
+        <p id="productInfo"></p>
+        <div class="payment-methods">
+            <button onclick="fakePayment()">
+                <i class="bi bi-wallet2 me-2"></i>Razorpay
+            </button>
+            <button onclick="fakePayment()">
+                <i class="bi bi-phone me-2"></i>UPI
+            </button>
+            <button onclick="fakePayment()">
+                <i class="bi bi-credit-card me-2"></i>Card
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+    /* CARD ANIMATION */
+    const cards = document.querySelectorAll('.product-card');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting){
+                entry.target.style.opacity="1";
+                entry.target.style.transform="translateY(0)";
+            }
+        });
+    });
+
+    cards.forEach(card => {
+        card.style.opacity="0";
+        card.style.transform="translateY(50px)";
+        card.style.transition=".6s ease";
+        observer.observe(card);
+    });
+});
+
+/* PAYMENT FUNCTIONS */
+function showPayment(name, price){
+    document.getElementById("paymentModal").style.display="block";
+    document.getElementById("productInfo").innerHTML = name + "<br><br><b>₹" + price + "</b>";
+}
+
+function closeModal(){
+    document.getElementById("paymentModal").style.display="none";
+}
+
+function fakePayment(){
+    alert("🎉 Payment Successful!\n\nOrder placed successfully.");
+    closeModal();
+}
+
+/* LOGIN CHECK */
+function checkLogin(url){
+    {% if user.is_authenticated %}
+        window.location.href = url;
+    {% else %}
+        alert("👶 Please create an account first");
+        window.location.href = "{% url 'register' %}?next=" + encodeURIComponent(url);
+    {% endif %}
+}
+
+/* BUY FUNCTION */
+function checkBuy(name, price){
+    {% if user.is_authenticated %}
+        showPayment(name, price);
+    {% else %}
+        alert("👶 Please create an account first");
+        window.location.href = "{% url 'register' %}?next=" + encodeURIComponent(window.location.pathname);
+    {% endif %}
+}
+</script>
+</body>
+</html>
