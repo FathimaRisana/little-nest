@@ -8,6 +8,14 @@
   ],
   "routes": [
     {
+      "src": "/static/(.*)",
+      "dest": "/ecombabyshoppingproject/static/$1"
+    },
+    {
+      "src": "/media/(.*)",
+      "dest": "/ecombabyshoppingproject/media/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "index.py"
     }
