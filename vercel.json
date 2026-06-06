@@ -4,16 +4,24 @@
     {
       "src": "index.py",
       "use": "@vercel/python"
+    },
+    {
+      "src": "ecombabyshoppingproject/static/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "ecombabyshoppingproject/media/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/ecombabyshoppingproject/static/$1"
+      "dest": "ecombabyshoppingproject/static/$1"
     },
     {
       "src": "/media/(.*)",
-      "dest": "/ecombabyshoppingproject/media/$1"
+      "dest": "ecombabyshoppingproject/media/$1"
     },
     {
       "src": "/(.*)",
