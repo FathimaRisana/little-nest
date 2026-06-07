@@ -3,19 +3,13 @@ services:
     name: little-nest
     env: python
     buildCommand: "./build.sh"
-    startCommand: "gunicorn index:app"
+    startCommand: "python ecombabyshoppingproject/manage.py migrate && gunicorn index:app"
     envVars:
       - key: DEBUG
         value: "False"
       - key: SECRET_KEY
         generateValue: true
-      # If using SQLite on Render (paid plan required for persistent disks):
-      - key: SQLITE_DB_DIR
-        value: "/data"
-      # If using PostgreSQL, link or set DATABASE_URL instead of SQLITE_DB_DIR:
+      # If using PostgreSQL, link or set DATABASE_URL:
       # - key: DATABASE_URL
       #   value: postgres://...
-    disk:
-      name: sqlite-data
-      mountPath: /data
-      sizeGB: 1
+

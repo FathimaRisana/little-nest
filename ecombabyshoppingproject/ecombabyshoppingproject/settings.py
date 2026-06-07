@@ -86,13 +86,21 @@ DB_PATH = BASE_DIR / 'db.sqlite3'
 # Support Persistent Disk on Render or fallback to temp dir if read-only
 sqlite_db_dir = os.environ.get('SQLITE_DB_DIR')
 if sqlite_db_dir:
-    os.makedirs(sqlite_db_dir, exist_ok=True)
-    DB_PATH = Path(sqlite_db_dir) / 'db.sqlite3'
-elif os.environ.get('VERCEL') or not os.access(str(BASE_DIR), os.W_OK):
-    tmp_db_path = '/tmp/db.sqlite3'
-    if not os.path.exists(tmp_db_path) and os.path.exists(str(DB_PATH)):
-        shutil.copy2(str(DB_PATH), tmp_db_path)
-    DB_PATH = Path(tmp_db_path)
+    try:
+        os.makedirs(sqlite_db_dir, exist_ok=True)
+        DB_PATH = Path(sqlite_db_dir) / 'db.sqlite3'
+    except Exception:
+        # Fallback if the database directory is not writable (e.g. during Render's build phase)
+        sqlite_db_dir = None
+
+if not sqlite_db_dir:
+    if os.environ.get('VERCEL') or not os.access(str(BASE_DIR), os.W_OK):
+        tmp_db_path = '/tmp/db.sqlite3'
+        if not os.path.exists(tmp_db_path) and os.path.exists(str(BASE_DIR / 'db.sqlite3')):
+            shutil.copy2(str(BASE_DIR / 'db.sqlite3'), tmp_db_path)
+        DB_PATH = Path(tmp_db_path)
+    else:
+        DB_PATH = BASE_DIR / 'db.sqlite3'
 
 if os.environ.get('DATABASE_URL'):
     # Configure Django for Render PostgreSQL (if URL is provided)
