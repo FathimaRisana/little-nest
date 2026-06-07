@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -78,22 +79,37 @@ WSGI_APPLICATION = 'ecombabyshoppingproject.wsgi.application'
 
 import shutil
 import os
+import dj_database_url
 
 DB_PATH = BASE_DIR / 'db.sqlite3'
 
-# If running on Vercel or read-only directory, copy the database to /tmp
-if os.environ.get('VERCEL') or not os.access(str(BASE_DIR), os.W_OK):
+# Support Persistent Disk on Render or fallback to temp dir if read-only
+sqlite_db_dir = os.environ.get('SQLITE_DB_DIR')
+if sqlite_db_dir:
+    os.makedirs(sqlite_db_dir, exist_ok=True)
+    DB_PATH = Path(sqlite_db_dir) / 'db.sqlite3'
+elif os.environ.get('VERCEL') or not os.access(str(BASE_DIR), os.W_OK):
     tmp_db_path = '/tmp/db.sqlite3'
     if not os.path.exists(tmp_db_path) and os.path.exists(str(DB_PATH)):
         shutil.copy2(str(DB_PATH), tmp_db_path)
     DB_PATH = Path(tmp_db_path)
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(DB_PATH),
+if os.environ.get('DATABASE_URL'):
+    # Configure Django for Render PostgreSQL (if URL is provided)
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL'),
+            conn_max_age=600
+        )
     }
-}
+else:
+    # Use SQLite (default local or persistent directory)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': str(DB_PATH),
+        }
+    }
 
 
 # Password validation
@@ -135,6 +151,22 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+
+# The absolute path to the directory where collectstatic will collect static files for deployment.
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# WhiteNoise storage configuration for compression and caching
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+# Keep collectstatic from failing if there are missing referenced files in stylesheets
+WHITENOISE_MANIFEST_STRICT = False
 
 import os
 MEDIA_URL = '/media/'
