@@ -134,7 +134,7 @@ def register(request):
         if next_url:
             return redirect(next_url)
 
-        return redirect('index')
+        return redirect('home')
 
     return render(
         request,
