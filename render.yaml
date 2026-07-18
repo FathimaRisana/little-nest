@@ -9,6 +9,8 @@ services:
         value: "False"
       - key: SECRET_KEY
         generateValue: true
+      - key: PYTHON_VERSION
+        value: "3.10.0"
       # If using PostgreSQL, link or set DATABASE_URL:
       # - key: DATABASE_URL
       #   value: postgres://...
